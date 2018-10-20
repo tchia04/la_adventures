@@ -12,7 +12,18 @@
 
 <p>
   <strong>Picture:</strong>
-  <%= @adventure.picture %>
+  <%= image_tag(@adventure.picture_url, :width => 600) if @adventure.picture.present? %>
+  <h3>Comments</h3>
+    <%= link_to 'show all comments', adventure_comments_path(adventure_id: @adventure.id) %></p>
+    <% @comments.each do |comment| %>
+      <div>
+        <strong><%= comment.user_name %></strong>
+        <br />
+        <p><%= comment.body %></p>
+        <p><%= link_to 'Delete', adventure_comment_path(adventure_id: @adventure.id), method: :delete, data: { confirm: 'Are you sure?' } %></p>
+      </div>
+    <% end %>
+  <%= render 'comments/form' %>
 </p>
 
 <p>
